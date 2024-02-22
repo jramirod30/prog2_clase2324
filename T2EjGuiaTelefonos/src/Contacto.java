@@ -34,4 +34,13 @@ public class Contacto {
         return nombre + ": " + numero;
     }
     
+    public void setNumero(long numero) {
+    	this.numero = numero;
+    }
+    
+    public boolean contieneNumeroMadrid() {
+    	String num = Long.toString(numero);
+		return (num.startsWith("3491") || num.startsWith("91"));
+    }
+    
 }
