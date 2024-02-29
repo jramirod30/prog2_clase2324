@@ -1,3 +1,5 @@
+import reproductor.ReproductorMusica;
+import reproductor.cancion.Cancion;
 
 public class TestPlayer {
 

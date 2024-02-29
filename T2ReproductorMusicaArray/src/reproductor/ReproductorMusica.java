@@ -1,5 +1,6 @@
+package reproductor;
 
-
+import reproductor.cancion.Cancion;
 
 public class ReproductorMusica {
 	// contiene las canciones que se pueden reproducir
@@ -10,7 +11,9 @@ public class ReproductorMusica {
 	private int punteroReproduccion; 
 
 	public ReproductorMusica(int capacidad){
-		
+		listaReproduccion = new Cancion[capacidad];
+		noCanciones = 0;
+		punteroReproduccion = -1;
 	}
 
 	public String toString(){	
@@ -31,8 +34,13 @@ public class ReproductorMusica {
 	 * e.o.c. devuelve -1 
 	 *
 	 */
-	private int buscarCancion(String titulo, double duracion){	
-		return 0;
+	private int buscarCancion(String titulo, double duracion){
+		int i;
+		Cancion cancion = new Cancion(titulo, duracion);
+		for(i=0; i < noCanciones && 
+				!listaReproduccion[i].esIgual(cancion); i++);
+		
+		return i < noCanciones ? i : -1;
 	}
 
 	/**
@@ -44,7 +52,17 @@ public class ReproductorMusica {
 	 * e.o.c. no hace nada
 	 */
 	public void borrarCancion(String titulo, double duracion){
-		
+		int pos = buscarCancion(titulo, duracion);
+		if (pos != -1) {
+			for(int i=pos; i<noCanciones-1; i++)
+				listaReproduccion[i] = listaReproduccion[i+1];
+			noCanciones--;
+			/*
+			 * if (noCanciones == 0) punteroReproduccion = -1; 
+			 * else punteroReproduccion = 0;
+			 */
+			punteroReproduccion = noCanciones == 0 ? -1:0;
+		}
 	}
 
 	/**
@@ -55,8 +73,17 @@ public class ReproductorMusica {
 	 * Si canciones.length = 0, no hace nada.
 	 */
 	public void insertarCanciones(Cancion[] canciones){
-		
-		
+		if (canciones.length > 0) {
+			punteroReproduccion = noCanciones;
+			for(int i=0; i<canciones.length; i++, noCanciones++)
+				listaReproduccion[noCanciones] = canciones[i];
+			/*
+			 * for(Cancion cancion: canciones) { 
+			 *   listaReproduccion[noCanciones] =
+			 *   canciones[i]; noCanciones++; 
+			 * }
+			 */		
+		}		
 	}
 
 	/**	
@@ -65,7 +92,9 @@ public class ReproductorMusica {
 	 * e.o.c. deja el puntero igual
 	 */
 	public void seleccionarCancion(String titulo, double duracion){
-		
+		int pos = buscarCancion(titulo, duracion);
+		if (pos != -1)
+			punteroReproduccion = pos;
 	}
 
 	/**
@@ -73,7 +102,7 @@ public class ReproductorMusica {
 	 * POST: reproduce la canción a la que apunta el puntero
 	 */
 	public void reproducirCancionSeleccionada(){
-		
+		listaReproduccion[punteroReproduccion].reproducirCancion(); 
 	}
 
 	/**
@@ -82,14 +111,14 @@ public class ReproductorMusica {
 	 * POST: avanza el puntero a la siguiente canción de la lista
 	 */
 	public void avanzarPuntero(){
-		
+		punteroReproduccion++;
 	}
 
 	/**
 	 * POST: Indica si el puntero está en la última canción de la lista 
 	 */
 	public boolean haySiguiente(){
-		return false;
+		return punteroReproduccion != noCanciones - 1;
 	}
 
 	/** 
