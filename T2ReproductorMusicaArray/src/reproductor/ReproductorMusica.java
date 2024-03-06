@@ -127,10 +127,21 @@ public class ReproductorMusica {
 	 * Si no hay ninguna, se devuelve un vector de tamaño cero. 
 	 */
 	public Cancion[] seleccionarCancionesMasEscuchadas(int veces){
-		
-		return null;
+		int numeroCancionesMasEscuchadas = 0;
+		for(Cancion cancion: listaReproduccion) {
+			if(cancion.getNoReproducciones() >= veces)
+				numeroCancionesMasEscuchadas++;
+		}
+		Cancion[] cancionesMasEscuchadas = new Cancion[numeroCancionesMasEscuchadas];
+		int pos = 0;
+		for(int i=0; pos < cancionesMasEscuchadas.length; i++) {
+			if(listaReproduccion[i].getNoReproducciones() >= veces) {
+				cancionesMasEscuchadas[pos] = new Cancion(listaReproduccion[i]);
+				pos++;
+			}
+		}
+		return cancionesMasEscuchadas;
 	}
 
 	
-
 }
