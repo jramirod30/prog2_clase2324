@@ -1,5 +1,8 @@
 package vajilla;
 
+import vajilla.exception.ErrorPrepararDesayuno;
+import vajilla.exception.ErrorVasoLLeno;
+
 public class Vaso {
 	
 	private double capacidadMax;
@@ -9,25 +12,40 @@ public class Vaso {
 		this.capacidadMax = capacidadMax;
 	}
 	
-	public void llenar (double cantidad){
-		if (contenido+cantidad <= capacidadMax){
-			contenido+= cantidad;
+	public void llenar (double cantidad) throws ErrorVasoLLeno{
+		if (contenido+cantidad > capacidadMax){
+			throw new ErrorVasoLLeno("Hay sitio para " + 
+		              (this.capacidadMax - this.contenido+ " y me han dado: "
+			           + cantidad));
 		}
-		else
-			System.err.println("No se puede llenar");
+		contenido+= cantidad;
 		
 	}
 	
-	public void prepararDesayuno (double leche, double azucar, double colacao){
-		llenar(leche);
-		llenar(azucar);
-		llenar(colacao);
+	
+	public void prepararDesayuno (double leche, double azucar,
+			double colacao) throws ErrorPrepararDesayuno{
+		try {
+			llenar(leche);
+			llenar(azucar);
+			llenar(colacao);
+		} catch (ErrorVasoLLeno e) {
+			this.contenido=0;
+			throw new ErrorPrepararDesayuno("No se pudo preparar el desayuno");
+			
+		}
+		
 	}
 	
 	public String toString() {
 		return "Vaso [contenido=" + contenido + "]\n";
 	}
 	
+	
+	//Gets
+	public double getCapacidadMax() {
+		return this.capacidadMax;
+	}
 	
 
 }
