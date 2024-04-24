@@ -18,7 +18,7 @@ public class GestionCuenta {
 	 * @param args
 	 */
 	public static void main(String[] args) {//main
-		double [] saldosInciales = {10, 15, -5, 19, 0, 150, 200};
+		//double [] saldosInciales = {10, 15, -5, 19, 0, 150, 200};
 		try {
 			CuentaCorriente.setGastosApertura(20);
 		} catch (CantidadIncorrecta e1) {
@@ -27,7 +27,7 @@ public class GestionCuenta {
 		}
 		CuentaCorriente corriente = null;
 		//TODOO se debe controlar las excepciones para que se llegue a abrir una cuenta
-		double [] apartura ={19, -5, 20};
+		double [] saldosInciales ={19, -5, 20};
 		
 		//TODO se deben controlar las excepciones y procesar todos los ingresos
 		// se debe informar de los errores. 
