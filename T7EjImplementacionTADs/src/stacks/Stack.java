@@ -9,7 +9,7 @@ import stacks.exceptions.EmptyStackException;
  * Implementación de un TAD Pila
  * basada en una cadena simplemente enlazada
  * 
- * @author jramirez
+ * 
  *
  */
 public class Stack <E>
