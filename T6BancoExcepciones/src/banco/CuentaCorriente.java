@@ -19,10 +19,16 @@ public class CuentaCorriente {
 	/**
 	 * Contruye una cuanta bancaria
 	 * PRE: saldoInical >= gastosApertura
+	 * @throws SaldoInicialInsuficiente 
 	 */
-	public CuentaCorriente(String cliente, double saldoInicial){
-		//TODO
-		
+	
+	public CuentaCorriente(String cliente, double saldoInicial)
+			throws SaldoInicialInsuficiente{
+		if(saldoInicial<CuentaCorriente.gastosApertura) {
+			throw new SaldoInicialInsuficiente("Error, saldo inicial insuficiente");
+		}
+		saldo = saldoInicial-CuentaCorriente.gastosApertura;
+		this.cliente = cliente;
 	}
 	
 	/**
@@ -32,8 +38,15 @@ public class CuentaCorriente {
 	 * @throws CantidadIncorrecta 
 	 * @throws SaldoInsuficiente 
 	 */
-	public void sacarDinero (double cantidad){
-		//TODO
+	public void sacarDinero (double cantidad) 
+			throws CantidadIncorrecta, SaldoInsuficiente{
+		if (cantidad <= 0)
+			throw new CantidadIncorrecta ("La cantidad introducida debe ser mayor que cero"
+					+ " pero se proporcionó: " + cantidad);
+		if (cantidad > saldo)
+			throw new SaldoInsuficiente ("El saldo es insuficiente, dispone de: " + saldo +
+					" solicita: " + cantidad);
+		saldo -= cantidad;
 		
 	}
 	
@@ -43,8 +56,11 @@ public class CuentaCorriente {
 	 * @param cantidad
 	 * @throws CantidadIncorrecta 
 	 */
-	public void ingresarDinero (double cantidad) {
-		//TODO
+	public void ingresarDinero (double cantidad) throws CantidadIncorrecta {
+		if(cantidad<=0)
+			throw new CantidadIncorrecta ("La cantidad " + cantidad +
+					" es incorrecta, debe ser mayor que cero.");
+		saldo+= cantidad;
 		
 		
 	}
@@ -55,9 +71,12 @@ public class CuentaCorriente {
 	 * @param gastos
 	 * @throws CantidadIncorrecta 
 	 */
-	public static void setGastosApertura (double gastos){
-		//TODO
-
+	public static void setGastosApertura (double gastos) throws CantidadIncorrecta{
+		if (gastos < 0)
+			throw new CantidadIncorrecta ("La cantidad " + gastos +
+					" es incorrecta, debe ser mayor o igual que cero.");
+		
+		CuentaCorriente.gastosApertura = gastos;
 	}
 	
 	public double getSaldo() {
