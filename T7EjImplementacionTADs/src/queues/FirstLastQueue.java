@@ -46,16 +46,6 @@ public class FirstLastQueue<E> implements IQueue<E> {// ColaPrimeroUltimo
 	 * </PRE>
 	 */
 
-	/**
-	 * Elimina el primer elemento de la cola
-	 * <br><B>PRE:</B> no es vacía la cola
-	 * <br><B>POST:</B> El resultado es la cola de entrada sin el elemento más antiguo
-	 *
-	 * @throws EmptyQueueException excepción que se genera si se viola la precondición
-	 */
-	private void remove() throws EmptyQueueException {// Borrar
-		//TODO
-	}// Borrar
 
 	/*//Esp. formal
 	 * PRE: Cierto POST/SOL: Resultado = (C = CColaVacia) COMPLEJIDAD: O (1)
@@ -86,7 +76,15 @@ public class FirstLastQueue<E> implements IQueue<E> {// ColaPrimeroUltimo
 	 * @param  elemento Referencia a la información que se va a guardar en la cola. <B> No se saca copia de la información referenciada</B>
 	 */
 	public void add(E elemento) {// Insertar
-		//TODO
+		Node <E> insertar = new Node<>(elemento);
+		if(isEmpty()) {
+			this.head = insertar;
+			this.last = this.head;
+		}
+		else {
+			this.last.setNext(insertar);
+			this.last = this.last.next();
+		}
 	}// Insertar
 
 	/*//Esp. Formal
@@ -166,7 +164,11 @@ public class FirstLastQueue<E> implements IQueue<E> {// ColaPrimeroUltimo
 	 */
 	public E poll() throws EmptyQueueException {// Sacar_Primero
 		//TODO
-		return null;
+		E primero = this.peek();
+		head=head.next();
+		if(head==null)
+			last=null;
+		return primero;
 	}// Sacar_Primero
 
 }// ColaPrimeroUltimo

@@ -24,18 +24,6 @@ public class SimpleQueue  <E> implements IQueue<E>
 	 *  una cola vacía</PRE>
 	 */
 
-	/**
-	 * Elimina el primer elemento de la cola
-	 * <br><B>PRE:</B> no es vacía la cola
-	 * <br><B>POST:</B> El resultado es la cola de entrada sin el elemento más antiguo
-	 *
-	 * @throws EmptyQueueException excepción que se genera si se viola la precondición
-	 */
-	private void remove() throws EmptyQueueException 
-	{//Borrar
-		// TODO 
-		
-	}//Borrar
 
 	/*//Esp. Formal
 	 * PRE: Cierto
@@ -75,7 +63,16 @@ public class SimpleQueue  <E> implements IQueue<E>
 	 */
 	public void add (E elemento)
 	{//Insertar
-		//TODO
+		Node<E> node = new Node<>(elemento, null);
+		if (isEmpty()) {
+			head = node;
+		} else {
+			Node<E> actual = head;
+			while(actual.next() != null) {
+				actual = actual.next();
+			}
+			actual.setNext(node);
+		}
 	}//Insertar
 
 	/*//Esp. Formal
@@ -95,8 +92,10 @@ public class SimpleQueue  <E> implements IQueue<E>
 	 */
 	public E peek () throws EmptyQueueException
 	{//Primero
-		//TODO
-		return null;
+		if(isEmpty()) {
+			throw new EmptyQueueException("La cola esta vacia");
+		}
+		return this.head.getElem();
 	}//Primero
 
 	/*//Esp. Formal
@@ -151,8 +150,13 @@ public class SimpleQueue  <E> implements IQueue<E>
 	 * @throws EmptyQueueException excepción que se genera si se viola la precondición
 	 */
 	public E poll() throws EmptyQueueException
-	{//Sacar_Primero
-		return null;
+	{
+		/*if (isEmpty())
+			throw new EmptyQueueException ("La cola está vacía");
+		E primero = head.element();*/
+		E primero = this.peek();
+		head = head.next();
+		return primero;
 	}//Sacar_Primero
 
 

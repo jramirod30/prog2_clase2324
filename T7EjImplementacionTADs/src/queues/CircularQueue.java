@@ -38,17 +38,7 @@ public class CircularQueue  <E> implements IQueue<E> {
 	 *  una cola vacía</PRE>
 	 */  
 
-	/**
-	 * Elimina el primer elemento de la cola
-	 * <br><B>PRE:</B> no es vacía la cola
-	 * <br><B>POST:</B> El resultado es la cola de entrada sin el elemento más antiguo
-	 *
-	 * @throws EmptyQueueException excepción que se genera si se viola la precondición
-	 */
-	private void remove() throws EmptyQueueException
-	{//Borrar
-		//TODO
-	}//Borrar    
+   
 
 	/*//Esp Formal
 	 * <b>PRE</b>: Cierto<br>
@@ -83,7 +73,14 @@ public class CircularQueue  <E> implements IQueue<E> {
 	@Override
     public void add (E elemento)
 	{//Insertar
-	//TODO
+		if(isEmpty()) {
+			last = new Node <E>(elemento);
+			last.setNext(last);
+		}else {
+			Node <E> newNode = new Node <E>(elemento,last.next());
+			last.setNext(newNode);
+			last = newNode;
+		}
 	}//Insertar
 
 	/*//Esp. Formal
@@ -103,8 +100,10 @@ public class CircularQueue  <E> implements IQueue<E> {
 	@Override
     public E peek () throws EmptyQueueException
 	{//Primero
-		//TODO
-		return null;
+		if(this.isEmpty()) {
+			throw new EmptyQueueException("No se puede consultar una cola vacía.");
+		}
+		return this.last.next().getElem();
 	}//Primero
 
 	/*//Esp Formal.
@@ -152,8 +151,15 @@ public class CircularQueue  <E> implements IQueue<E> {
 	@Override
     public E poll() throws EmptyQueueException
 	{//Sacar_Primero
-		//TODO
-		return null;
+		E res = this.peek();
+		if (last == last.next()) {
+			last = null;
+		} else
+		{
+		 last.setNext(last.next().next());	
+		}
+		
+		return res;
 	}//Sacar_Primero
 
 

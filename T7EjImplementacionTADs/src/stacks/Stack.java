@@ -22,9 +22,13 @@ public class Stack <E>
 	} 
 
 	
-	private void remove() throws EmptyStackException 
+	/***
+	 * PRE: Debe tener almenos un elemento
+	 * Elimina el nodo de la cima
+	 */
+	private void remove()  
 	{
-		//TO-DO
+	  this.head = this.head.next();
 	}
 
 	/**
@@ -37,7 +41,7 @@ public class Stack <E>
 	public boolean isEmpty ()
 	{//Esta_Vacia
 		//TO-DO
-		return false;
+		return this.head == null;
 	}
 
 	/**
@@ -50,7 +54,10 @@ public class Stack <E>
 	
 	public void push (E elemento)
 	{        
-		//TO-DO       
+		Node<E> newNode = new Node<>(elemento, head);
+		this.head = newNode;
+		
+			//TO-DO       
 	}
 
 	/**
@@ -65,8 +72,10 @@ public class Stack <E>
 	
 	public E peek () throws EmptyStackException
 	{
-		//TO-DO
-		return null;
+		if(head == null) {
+			throw new EmptyStackException("La pila está vacía");
+		}
+		return head.getElem();
 	}
 
 	/**
@@ -98,8 +107,16 @@ public class Stack <E>
 	
 	public E pop() throws EmptyStackException
 	{
-		//TO-DO
-		return null;
+		/*
+		if (head == null) {
+			throw new EmptyStackException ("La pila esta vacia");
+		}
+		E dato = head.element();
+		head = head.next();
+		*/
+		E dato = this.peek();
+		this.remove();
+		return dato;
 	}
 
 }
